@@ -47,14 +47,32 @@ class Lexer:
         
     def tokenize(self):
         # Expresión regular "Libby turn on TV"
-        pattern = r"(?i)(levy|libby|living)\s+turn\s+on\s+tv"
-        match = re.match(pattern, self.input_text)
-        
-        if match:
-            self.tokens.append(("COMMAND", match.group(0)))
-        else:
-            raise ValueError("Invalid command")
+        for palabra in self.palabras: 
             
+            er_activador = r"(L|l)evy|((L|l)(i|ea))(ving|bby)"
+            er_instruccion = r"(T|t)urn"
+            er_complemento1 = r"(O|o)n"
+            er_complemento2 = r"(O|o)ff"
+            er_objeto1 = r"(T|t)(V|v)"
+            er_objeto2 = r"(F|f)an"
+                        
+            re.match(er_activador, palabra)
+            
+            if re.match(er_activador, palabra):
+                self.tokens.append((TT_ACTIVADOR))
+            elif re.match(er_instruccion, palabra):
+                self.tokens.append((TT_INSTRUCCION))
+            elif re.match(er_complemento1, palabra):
+                self.tokens.append((TT_COMPLEMENTO1))
+            elif re.match(er_complemento2, palabra):
+                self.tokens.append((TT_COMPLEMENTO2))
+            elif re.match(er_objeto1, palabra):
+                self.tokens.append((TT_OBJETO1))
+            elif re.match(er_objeto2, palabra):
+                self.tokens.append((TT_OBJETO2))   
+            else:
+                return [], PalabraIlegalError('"'+ palabra +'"')
+                
         return self.tokens
 
 class Parser:
