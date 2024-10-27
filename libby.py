@@ -1,11 +1,49 @@
 import re
 
+#######################################
+# ERRORS
+#######################################
+
+class Error:
+    def __init__(self, error_name, details):
+        self.error_name = error_name
+        self.details = details
+    
+    def as_string(self):
+        result  = f'{self.error_name}: {self.details}\n'
+        return result
+
+class PalabraIlegalError(Error):
+    def __init__(self, details):
+        super().__init__('Illegal Character', details)
+
+#######################################
+# TOKENS
+#######################################
+
+TT_ACTIVADOR = 'ACTIVADOR'
+
+TT_INSTRUCCION = 'INSTRUCCION'
+
+TT_COMPLEMENTO1 = 'COMPLEMENTO1'
+
+TT_COMPLEMENTO2 = 'COMPLEMENTO2'
+
+TT_OBJETO1 = 'OBJETO1'
+
+TT_OBJETO2 = 'OBJETO2'
+
+
+#######################################
+# LEXER
+#######################################
 
 class Lexer:
     def __init__(self, input_text):
         self.input_text = input_text
         self.tokens = []
         self.current_pos = 0
+        self.palabras = input_text.split(" ")
         
     def tokenize(self):
         # Expresión regular "Libby turn on TV"
