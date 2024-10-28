@@ -15,7 +15,11 @@ class Error:
 
 class PalabraIlegalError(Error):
     def __init__(self, details):
-        super().__init__('Illegal Character', details)
+        super().__init__('Palabra Ilegal', details)
+
+class ComandoIlegalError(Error):
+    def __init__(self, details):
+        super().__init__('Comando Ilegal')
 
 #######################################
 # TOKENS
@@ -75,25 +79,49 @@ class Lexer:
                 
         return self.tokens
 
+#######################################
+# PARSER
+#######################################
+
 class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
         
     def parse(self):
-        if self.tokens[0][0] == "COMMAND":
-            return True
-        else:
-            return False
+        array_tokens = self.tokens
+
+        if array_tokens[0] == TT_ACTIVADOR:
+            if array_tokens[1] == TT_INSTRUCCION:
+                if array_tokens[2] == TT_COMPLEMENTO1 and array_tokens[3] == TT_OBJETO1:
+                    return "C1"
+                elif array_tokens[2] == TT_COMPLEMENTO2 and array_tokens[3] == TT_OBJETO1:
+                    return "C2"
+                elif array_tokens[2] == TT_COMPLEMENTO1 and array_tokens[3] == TT_OBJETO2:
+                    return "C3"
+                elif array_tokens[2] == TT_COMPLEMENTO2 and array_tokens[3] == TT_OBJETO2:
+                    return "C4"
+
+        return ""
+
+#######################################
+# INTERPRETER
+#######################################
 
 class Interpreter:
     def __init__(self, parser_result):
         self.parser_result = parser_result
     
     def interpret(self):
-        if self.parser_result:
+        if self.parser_result == "C1":
             print("Executing: Turn on TV")
+        elif self.parser_result == "C2":
+            print("Executing: Turn off TV")
+        elif self.parser_result == "C3":
+            print("Executing: Turn on Fan")
+        elif self.parser_result == "C4":
+            print("Executing: Turn off Fan")
         else:
-            print("Invalid command")
+            ComandoIlegalError()
 
 def main(input_text):
     try:
