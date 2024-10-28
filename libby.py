@@ -40,10 +40,10 @@ TT_OBJETO2 = 'OBJETO2'
 
 
 #######################################
-# LEXER
+# LEXico
 #######################################
 
-class Lexer:
+class Lexico:
     def __init__(self, input_text):
         self.input_text = input_text
         self.tokens = []
@@ -84,7 +84,7 @@ class Lexer:
 # PARSER
 #######################################
 
-class Parser:
+class Sintactico:
     def __init__(self, tokens):
         self.tokens = tokens
         
@@ -109,7 +109,7 @@ class Parser:
 # INTERPRETER
 #######################################
 
-class Interpreter:
+class Interprete:
     def __init__(self, parser_result):
         self.parser_result = parser_result
     
@@ -130,16 +130,16 @@ class Interpreter:
 
 def main(input_text):
     try:
-        # Lexer
-        lexer = Lexer(input_text)
+        # Analizador Lexico
+        lexer = Lexico(input_text)
         tokens = lexer.tokenize()
         
-        # Parser
-        parser = Parser(tokens)
+        # Analizador Sintactico
+        parser = Sintactico(tokens)
         parser_result = parser.parse()
         
-        # Interpreter
-        interpreter = Interpreter(parser_result)
+        # Interprete
+        interpreter = Interprete(parser_result)
         interpreter.interpret()
         
     except ValueError as e:
