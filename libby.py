@@ -144,7 +144,13 @@ def main(input_text):
 if __name__ == "__main__":
     main("Libby turn on TV")     
     main("Levy turn on TV")      
-    main("Living turn on TV")    
-    main("libby turn off TV")    
+    main("Living turn on fan")    
+    main("libby turn off Fan")   
+    main("libby turn off light")
+    main("libby turn off computer")  
+    main("LIBBY turn off Fan")    
+    main("fan libby turn off") 
+    main("turn off tv libby")   
+    main("Libby off turn Fan")  
 
 
