@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcriber</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Voice Transcriber</h1>
+    <button id="toggleButton">Start Listening</button>
+    <p id="transcription">{{ transcription }}</p>
+
+    <script>
+        let listening = false;
+
+        $("#toggleButton").click(function() {
+            $.post("/toggle_listen", function(data) {
+                listening = data.listening;
+                $("#toggleButton").text(listening ? "Stop Listening" : "Start Listening");
+            });
+        });
+    </script>
+</body>
+</html>
