@@ -117,15 +117,16 @@ class Interprete:
     def interpret(self):
         if self.parser_result != "":
             if self.parser_result == "C1":
-                print("Executing: Turn on TV")
+                return "Executing: Turn on TV"
             elif self.parser_result == "C2":
-                print("Executing: Turn off TV")
+                return "Executing: Turn off TV"
             elif self.parser_result == "C3":
-                print("Executing: Turn on Fan")
+                return "Executing: Turn on Fan"
             elif self.parser_result == "C4":
-                print("Executing: Turn off Fan")
+                return "Executing: Turn off Fan"
             elif self.parser_result == "comando invalido":
                 ComandoIlegalError("Estructura sintactica invalida.")
+                return "Comando Invalido"
              
 
 def main(input_text):
@@ -140,7 +141,9 @@ def main(input_text):
         
         # Interprete
         interpreter = Interprete(parser_result)
-        interpreter.interpret()
+        respuesta = interpreter.interpret()
+
+        return respuesta
         
     except ValueError as e:
         print(e)

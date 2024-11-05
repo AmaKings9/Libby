@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcriber</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Voice Transcriber</h1>
+    <button id="toggleButton">Start Libby</button>
+    <p id="respuesta">{{ respuestaLibby }}</p>
+
+    <script>
+        let listening = false;
+
+        //Envia una solicitud a la ruta /toggle_listen permite alternar el estado de escucha del micrófono
+        $("#toggleButton").click(function() {
+            //Envia una solicitud POST
+            $.post("/toggle_listen", function(data) {
+                //Cambia el texto del boton de acuerdo si esta escuchando o no
+                listening = data.listening;
+                $("#toggleButton").text(listening ? "Stop Listening" : "Start Libby");
+            });
+        });
+
+        //Cambia el contenido de <p> de acuerdo a la respuesta del interprete
+        function updateRespuestaLibby() {
+            //realiza peticion get a la ruta establecida de donde obtiene un objeto json
+            // con la respuesta del interprete
+            $.get("/get_respuestaLibby", function(data) {
+                //actualiza el contenido de <p>
+                $("#respuesta").text(data.respuestaLibby);
+            });
+        }
+
+        // Llama a updateTranscription cada segundo para actualizar la transcripción en la página
+        setInterval(updateRespuestaLibby, 1000);
+    </script>
+</body>
+</html>
