@@ -17,6 +17,7 @@ body {
     cursor: pointer;
     background-image: radial-gradient(circle, #171424, #000);
 }
+
 .face {
     position: absolute;
 }
@@ -935,11 +936,56 @@ body {
 .tv__back {
     background-color: #0b0c1f;
 }
-.tv__right {
+
+/* Pantalla Encendida */
+.tv__right.encendida {
+    background-color: #9cbcfc;
+    border: 0.125vw solid #000;
+    animation: pantalla-tv 0.25s infinite alternate;
+  }
+  
+  .tv__right.encendida::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0.125vw 0.125vw 1vw rgba(81, 137, 251, .5),
+                -0.125vw 0.125vw 1vw rgba(81, 137, 251, .5),
+                0.125vw -0.125vw 1vw rgba(81, 137, 251, .5),
+                -0.125vw -0.125vw 1vw rgba(81, 137, 251, .5);
+    background-image: url('https://rawcdn.githack.com/ricardoolivaalonso/Codepen/43200238c3177b02a97423fa6cc23f8bfcc5c105/Room/gif.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    opacity: 0.8;
+  }
+  
+  .tv__left.encendida::before {
+    content: '';
+    position: absolute;
+    width: 13vw;
+    height: 7vw;
+    background-image: radial-gradient(rgba(36, 112, 188, .95), rgba(56, 121, 250, .95));
+    filter: blur(1.25vw);
+    animation: luz-tv 0.25s infinite alternate;
+  }
+  
+  /* Pantalla Apagada */
+  .tv__right {
+    background-color: #000000;
+    border: 0.125vw solid #000;
+  }
+  
+  .tv__right::before, .tv__left::before {
+    content: none;
+  }
+
+/* .tv__right {
     background-color: #9cbcfc;
     border: 0.125vw solid #000;
     animation: pantalla-tv 0.25s infinite alternate;
 }
+
 .tv__right::before {
     content: '';
     position: absolute;
@@ -951,14 +997,15 @@ body {
     background-repeat: no-repeat;
     background-position: bottom;
     opacity: 0.8;
-}
+} */
+
 .tv__left {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #0b0c1f;
 }
-.tv__left::before {
+/* .tv__left::before {
     content: '';
     position: absolute;
     width: 13vw;
@@ -966,7 +1013,7 @@ body {
     background-image: radial-gradient(rgba(36, 112, 188, .95), rgba(56, 121, 250, .95));
     filter: blur(1.25vw);
     animation: luz-tv 0.25s infinite alternate;
-}
+} */
 .tv__top {
     background-color: #0b0c1f;
 }
@@ -1381,103 +1428,87 @@ body {
 .caja:nth-of-type(3) {
     top: 17vw;
 }
-.cuadro-l, .cuadro-r {
+.cuadro-l {
+    /* Posicion del caudro */
     position: absolute;
-    left: 13vw;
+    left: 14.5vw;
     top: 1vw;
     width: 5vw;
     height: 0.5vw;
     transform: translateZ(10vw);
 }
-.cuadro-l__front, .cuadro-r__front {
-    width: 5vw;
+.cuadro-l__front {
+    /* Ancho de la imagen */
+    width: 10vw;
+    /* Profundidad de la imagen = 7 */
     height: 7vw;
     transform-origin: bottom left;
     transform: rotateX(-90deg) translateZ(-6.75vw);
 }
-.cuadro-l__back, .cuadro-r__back {
-    width: 5vw;
+.cuadro-l__back {
+    /* Grosor de la sombra = 10 */
+    width: 10vw;
     height: 7vw;
     transform-origin: top left;
-    transform: rotateX(-90deg) rotateY(180deg) translateX(-5vw) translateY(-7vw);
+    transform: rotateX(-90deg) rotateY(180deg) translateX(-10vw) translateY(-7vw);
 }
-.cuadro-l__right, .cuadro-r__right {
+.cuadro-l__right {
     width: 0.25vw;
     height: 7vw;
     transform-origin: top left;
-    transform: rotateY(90deg) rotateZ(-90deg) translateZ(5vw) translateX(-0.25vw) translateY(-7vw);
+    transform: rotateY(90deg) rotateZ(-90deg) translateZ(10vw) translateX(-0.25vw) translateY(-7vw);
 }
-.cuadro-l__left, .cuadro-r__left {
+.cuadro-l__left {
     width: 0.25vw;
     height: 7vw;
     transform-origin: top left;
     transform: rotateY(-90deg) rotateZ(90deg) translateY(-7vw);
 }
-.cuadro-l__top, .cuadro-r__top {
-    width: 5vw;
+.cuadro-l__top {
+    width: 10vw;
     height: 0.25vw;
     transform-origin: top left;
     transform: translateZ(7vw);
 }
-.cuadro-l__bottom, .cuadro-r__bottom {
-    width: 5vw;
+.cuadro-l__bottom {
+    width: 10vw;
     height: 0.25vw;
     transform-origin: top left;
-    transform: rotateY(180deg) translateX(-5vw);
+    transform: rotateY(180deg) translateX(-10vw);
 }
-.cuadro-l__front, .cuadro-r__front {
+.cuadro-l__front {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 }
-.cuadro-l__back, .cuadro-r__back {
-    background-color: #383358;
-    box-shadow: 0.35vw 0.35vw 0.35vw rgba(81, 137, 251, .2), -0.35vw 0.35vw 0.35vw rgba(81, 137, 251, .2), -0.35vw -0.35vw 0.35vw rgba(81, 137, 251, .2), 0.35vw -0.35vw 0.35vw rgba(81, 137, 251, .2);
-}
-.cuadro-l__right, .cuadro-r__right {
+.cuadro-l__back {
     background-color: #383358;
 }
-.cuadro-l__left, .cuadro-r__left {
+.cuadro-l__right {
+    background-color: #383358;
+}
+.cuadro-l__left {
     background-color: #9e99c1;
 }
-.cuadro-l__top, .cuadro-r__top {
+.cuadro-l__top {
     background-color: #9e99c1;
 }
-.cuadro-l__bottom, .cuadro-r__bottom {
+.cuadro-l__bottom {
     background-color: #383358;
 }
-.cuadro-l__front {
-    background-image: url('https://rawcdn.githack.com/ricardoolivaalonso/Codepen/43200238c3177b02a97423fa6cc23f8bfcc5c105/Room/cuadro-1.jpg');
-    background-color: #d51e24;
-    border: 1vw solid #d51e24;
+.cuadro-l__front{
+    background-image: url(static/Static_Fan.png);
+    background-color: rgb(0, 0, 0);
+    border: 0.1vw solid rgb(0, 0, 0);
 }
 .cuadro-l__front::before {
     content: '';
     position: absolute;
     top: -1vw;
     left: -1vw;
-    width: 5vw;
+    width: 10vw;
     height: 7vw;
     background-origin: padding-box;
-    background-image: linear-gradient(to bottom, rgba(40, 125, 210, .15), rgba(40, 125, 210, .15));
-}
-.cuadro-r {
-    left: 20vw;
-}
-.cuadro-r__front {
-    background-image: url('https://rawcdn.githack.com/ricardoolivaalonso/Codepen/43200238c3177b02a97423fa6cc23f8bfcc5c105/Room/cuadro-2.jpg');
-    background-color: #0f1110;
-    border: 0.5vw solid #0f1110;
-}
-.cuadro-r__front::before {
-    content: '';
-    position: absolute;
-    top: -0.5vw;
-    left: -0.5vw;
-    width: 5vw;
-    height: 7vw;
-    background-origin: padding-box;
-    background-image: linear-gradient(to bottom, rgba(40, 125, 210, .15), rgba(40, 125, 210, .15));
 }
 .puerta-c {
     position: absolute;
@@ -2282,6 +2313,86 @@ body {
     background-color: #000;
     box-shadow: 0.25vw 0.25vw 0.5vw rgba(24, 74, 124, .75), -0.25vw 0.25vw 0.5vw rgba(24, 74, 124, .75), -0.25vw -0.25vw 0.5vw rgba(24, 74, 124, .75), 0.25vw -0.25vw 0.5vw rgba(24, 74, 124, .75);
 }
+
+/**********************/
+/* Estilos para el boton */
+/**********************/
+.container {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    transform: translateX(0);
+    display: flex;
+    align-items: center; 
+  }
+
+  .Texto {
+    margin-left: 1.5rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #383358;
+    letter-spacing: 4px;
+    transition: color 0.3s ease;
+  }
+  
+  .circle {
+    stroke: #9e99c1;
+    stroke-dasharray: 650;
+    stroke-dashoffset: 650;
+    -webkit-transition: all 0.5s ease-in-out;
+    opacity: 0.3;
+  }
+  
+  .playBut {
+  /*  border: 1px solid red;*/
+    display: inline-block;
+    -webkit-transition: all 0.5s ease;
+    
+    .triangle {
+      -webkit-transition: all 0.7s ease-in-out;
+      stroke-dasharray: 240;
+      stroke-dashoffset: 480;
+      stroke: #383358;
+      transform: translateY(0);
+     }
+    
+    
+    &:hover {
+      
+      .triangle {
+        stroke-dashoffset: 0;
+        opacity: 1;
+        stroke: #9e99c1;
+        animation: nudge 0.7s ease-in-out;
+        
+        @keyframes nudge{
+          0% {
+            transform: translateX(0)  
+          }
+          30% {
+            transform: translateX(-5px)
+          }
+          50% {
+            transform: translateX(5px)
+          }
+          70% {
+            transform: translateX(-2px)
+          }
+          100% {
+            transform: translateX(0)
+          }
+        }
+      }
+      
+      .circle {
+        stroke-dashoffset: 0;
+        opacity: 1;
+      }
+      
+    }
+  }
+
 /**********************/
 /**********************/
 @keyframes pantalla-tablet {
