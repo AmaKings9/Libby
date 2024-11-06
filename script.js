@@ -13,3 +13,30 @@ let base = (e) => {
 }
 
 b.addEventListener('pointermove', base);
+
+
+let gifActivo = false;
+let tvStatus = false;
+
+function runLibby(){
+    // Apagar - encender ventilador...
+    const fanGif = document.getElementById("fan_gif");
+
+    if (gifActivo){
+        fanGif.style.backgroundImage = "url('static/Static_Fan.png')";
+
+    } else {
+        fanGif.style.backgroundImage = "url('static/Gif_Fan.gif')";
+    }
+    gifActivo = !gifActivo;
+
+    // Apagar - encender TV...
+
+    const tvRight = document.querySelector('.tv__right');
+    const tvLeft = document.querySelector('.tv__left');
+
+    tvRight.classList.toggle('encendida');
+    tvLeft.classList.toggle('encendida');
+
+    tvStatus = !tvStatus;
+}
