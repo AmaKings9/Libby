@@ -2335,22 +2335,38 @@ body {
     letter-spacing: 4px;
     transition: color 0.3s ease;
   }
+
+  .transition {
+    -webkit-transition: all 0.5s ease;  /* Para Safari y Chrome */
+    -moz-transition: all 0.5s ease;     /* Para Firefox */
+    -o-transition: all 0.5s ease;       /* Para Opera */
+    transition: all 0.5s ease;          /* Para navegadores modernos */
+  }
   
   .circle {
     stroke: #9e99c1;
     stroke-dasharray: 650;
     stroke-dashoffset: 650;
-    -webkit-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease;  /* Para Safari y Chrome */
+    -moz-transition: all 0.5s ease;     /* Para Firefox */
+    -o-transition: all 0.5s ease;       /* Para Opera */
+    transition: all 0.5s ease;          /* Para navegadores modernos */
     opacity: 0.3;
   }
   
   .playBut {
   /*  border: 1px solid red;*/
     display: inline-block;
-    -webkit-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;  /* Para Safari y Chrome */
+    -moz-transition: all 0.5s ease;     /* Para Firefox */
+    -o-transition: all 0.5s ease;       /* Para Opera */
+    transition: all 0.5s ease;          /* Para navegadores modernos */
     
     .triangle {
-      -webkit-transition: all 0.7s ease-in-out;
+      -webkit-transition: all 0.5s ease;  /* Para Safari y Chrome */
+      -moz-transition: all 0.5s ease;     /* Para Firefox */
+      -o-transition: all 0.5s ease;       /* Para Opera */
+      transition: all 0.5s ease;          /* Para navegadores modernos */
       stroke-dasharray: 240;
       stroke-dashoffset: 480;
       stroke: #383358;
