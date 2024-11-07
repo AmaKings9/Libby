@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import speech_recognition as sr
 import threading
-
 import libby
 
 app = Flask(__name__)
@@ -10,6 +9,16 @@ recognizer = sr.Recognizer()
 is_listening = False
 transcripcion = ""
 respuestaLibby = ""
+
+# Obtener la lista de micrófonos y mostrarla al usuario
+print("Dispositivos de audio disponibles:")
+mic_list = sr.Microphone.list_microphone_names()
+
+for index, name in enumerate(mic_list):
+    print(f"Idx {index}: {name}")
+
+# Solicitar al usuario que elija el micrófono
+mic_idx = int(input("Introduce el índice del micrófono que deseas usar: "))
 
 ############################################################
 # FUNCION LISTEN - SPEECH TO TEXT + LIBBY IMPLEMENTATION
@@ -21,9 +30,7 @@ def listen():
     global respuestaLibby
 
     #Seleccion del microfono deseado y asignacion a variable source
-    with sr.Microphone(device_index=2) as source:
-        #for index, name in enumerate(sr.Microphone.list_microphone_names()):
-            #print(f'{index}, {name}')
+    with sr.Microphone(device_index=mic_idx) as source:
 
         #Mientras este activa la escucha, se realizara la transcripcion de voz a texto en ingles
         while is_listening:
@@ -72,4 +79,5 @@ def get_respuestaLibby():
     return jsonify({'respuestaLibby': respuestaLibby})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # use_reloader=False evita que flask se reinicie cuando detecte cambios en el código
+    app.run(debug=True, use_reloader=False)
