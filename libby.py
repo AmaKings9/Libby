@@ -40,7 +40,7 @@ TT_OBJETO2 = 'OBJETO2'
 
 
 #######################################
-# LEXico
+# LEXICO
 #######################################
 
 class Lexico:
@@ -117,16 +117,17 @@ class Interprete:
     def interpret(self):
         if self.parser_result != "":
             if self.parser_result == "C1":
-                print("Executing: Turn on TV")
+                return "Turn on TV"
             elif self.parser_result == "C2":
-                print("Executing: Turn off TV")
+                return "Turn off TV"
             elif self.parser_result == "C3":
-                print("Executing: Turn on Fan")
+                return "Turn on Fan"
             elif self.parser_result == "C4":
-                print("Executing: Turn off Fan")
+                return "Turn off Fan"
             elif self.parser_result == "comando invalido":
                 ComandoIlegalError("Estructura sintactica invalida.")
-             
+                return "Comando Invalido"
+
 
 def main(input_text):
     try:
@@ -140,7 +141,9 @@ def main(input_text):
         
         # Interprete
         interpreter = Interprete(parser_result)
-        interpreter.interpret()
+        respuesta = interpreter.interpret()
+
+        return respuesta
         
     except ValueError as e:
         print(e)
@@ -157,5 +160,3 @@ if __name__ == "__main__":
     main("fan libby turn off") 
     main("turn off tv libby")   
     main("Libby off turn Fan")  
-
-
