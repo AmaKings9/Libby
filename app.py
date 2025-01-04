@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import speech_recognition as sr
 import threading
 import libby
+import time
 
 app = Flask(__name__)
 
@@ -9,6 +10,7 @@ recognizer = sr.Recognizer()
 is_listening = False
 transcripcion = ""
 respuestaLibby = ""
+last_response = ""
 
 # Obtener la lista de micrófonos y mostrarla al usuario
 print("Dispositivos de audio disponibles:")
@@ -76,8 +78,19 @@ def toggle_listen():
 # la ruta /get_respuestaLibby permite devolver la respuesta del I.I. en formato JSON
 @app.route('/get_respuestaLibby', methods=['GET'])
 def get_respuestaLibby():
-    return jsonify({'respuestaLibby': respuestaLibby})
+    global last_response
+    start_time = time.time()
+    timeout = 20  # Timeout de 30 segundos
+
+    while time.time() - start_time < timeout:
+        if respuestaLibby != last_response:
+            last_response = respuestaLibby
+            return jsonify({'respuestaLibby': respuestaLibby})
+        time.sleep(0.5)  # Espera 1 segundo antes de volver a verificar
+
+    if respuestaLibby == "Comando Invalido":
+        return jsonify({'respuestaLibby': "Comando Invalido"})
+    return jsonify({'respuestaLibby': None})  # Devuelve None si no hay respuesta después de 30 segundos.
 
 if __name__ == '__main__':
-    # use_reloader=False evita que flask se reinicie cuando detecte cambios en el código
     app.run(debug=True, use_reloader=False)
