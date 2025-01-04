@@ -32,38 +32,58 @@ const tvLeft = document.querySelector('.tv__left');
         });
     });
 
-    function updateRespuestaLibby() {
-        //realiza peticion get a la ruta establecida de donde obtiene un objeto json
-        // con la respuesta del interprete.
-        $.get("/get_respuestaLibby", function(data) {
-            // Compara la respuesta
-            switch (data.respuestaLibby){
-                case 'Turn on TV':
-                    tvRight.classList.add('encendida');
-                    tvLeft.classList.add('encendida');
-                    break;
+// Implementacion de la API SpeechSynthesis para la voz de Libby.
+    const playVoiceMessage = (message) => {
+        const speech = new SpeechSynthesisUtterance(message);
+        speech.lang = 'en-US'; // Idioma ingles
+        speech.pitch = 1; // Tono de voz
+        speech.rate = 1; // Velocidad de voz
+        window.speechSynthesis.speak(speech);
+    };
 
-                case 'Turn off TV':
-                    tvRight.classList.remove('encendida');
-                    tvLeft.classList.remove('encendida');
-                    break;
+function checkLibbyResponse() {
+    fetch('/get_respuestaLibby')
+        .then(response => response.json())
+        .then(data => {
+            if (data.respuestaLibby) {
+                switch (data.respuestaLibby) {
+                    case 'Turn on TV':
+                        tvRight.classList.add('encendida');
+                        tvLeft.classList.add('encendida');
+                        playVoiceMessage('All set! The TV is on, enjoy your show.');
+                        break;
 
-                case 'Turn on Fan':
-                    fanGif.style.backgroundImage = "url('/static/Gif_Fan.gif')";
-                    break;
+                    case 'Turn off TV':
+                        tvRight.classList.remove('encendida');
+                        tvLeft.classList.remove('encendida');
+                        playVoiceMessage('Got it! The TV is now off.');
+                        break;
 
-                case 'Turn off Fan':
-                    fanGif.style.backgroundImage = "url('/static/Static_Fan.png')";
-                    break;
+                    case 'Turn on Fan':
+                        fanGif.style.backgroundImage = "url('/static/Gif_Fan.gif')";
+                        playVoiceMessage('The fan is on! Time to cool down.');
+                        break;
 
-                case 'Comando Invalido':
-                    console.log('Comand invalid');
-                    break;
+                    case 'Turn off Fan':
+                        fanGif.style.backgroundImage = "url('/static/Static_Fan.png')";
+                        playVoiceMessage('Fan turned off! Hope you\'re feeling comfortable.');
+                        break;
 
-                default:
+                    case 'Comando Invalido':
+                        playVoiceMessage('Oops! I don\'t think I understood, How about trying again?');
+                        break;
+
+                    default:
+                        break;
+                }
             }
+        })
+        .catch(error => console.error('Error:', error))
+        .finally(() => {
+            // Vuelve a verificar después de un intervalo
+            setTimeout(checkLibbyResponse, 1000); // Ajusta el intervalo según sea necesario
         });
-    }
+}
 
-    // Llama a updateTranscription cada segundo para actualizar la transcripción en la página
-    setInterval(updateRespuestaLibby, 1000);
+// Inicia la verificación de la respuesta de Libby
+checkLibbyResponse();
