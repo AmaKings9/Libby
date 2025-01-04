@@ -89,8 +89,8 @@ def get_respuestaLibby():
         time.sleep(0.5)  # Espera 1 segundo antes de volver a verificar
 
     if respuestaLibby == "Comando Invalido":
-        return jsonify({'respuestaLibby': "Comando Invalido"})
-    return jsonify({'respuestaLibby': None})  # Devuelve None si no hay respuesta después de 30 segundos.
+        return jsonify({'respuestaLibby': "Comando Invalido"}) # Devuelve Comando invalido si no hay respuesta después de 20 segundos.
+    return jsonify({'respuestaLibby': None})  # Devuelve None si no hay respuesta después de 20 segundos.
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)
